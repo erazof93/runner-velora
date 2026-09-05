@@ -1,40 +1,92 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Card } from '@/components/common/Card';
-
-const earnings = [
-  { date: 'Oct 1', amount: 70, athlete: 'Atleta 1' },
-  { date: 'Oct 3', amount: 140, athlete: 'Atleta 2' },
-  { date: 'Oct 5', amount: 70, athlete: 'Atleta 3' },
-];
+import { StatCard } from '@/components/dashboard/StatCard';
+import { coachService } from '@/services/coachService';
+import type { CoachEarnings as CoachEarningsData } from '@/lib/api/types';
 
 export function Earnings() {
-  const total = earnings.reduce((sum, e) => sum + e.amount, 0);
+  const [earnings, setEarnings] = useState<CoachEarningsData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await coachService.getEarnings();
+        setEarnings(data);
+      } catch (err: any) {
+        setError(err.response?.data?.message || err.message || 'Error cargando ganancias');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
+  const stats = useMemo(() => {
+    const transactions = earnings?.transactions ?? [];
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const thisMonth = transactions
+      .filter((t) => new Date(t.createdAt) >= startOfMonth)
+      .reduce((sum, t) => sum + t.amount, 0);
+    const thisWeek = transactions
+      .filter((t) => new Date(t.createdAt) >= startOfWeek)
+      .reduce((sum, t) => sum + t.amount, 0);
+    const activeAthletes = new Set(transactions.map((t) => t.athleteId)).size;
+
+    return { thisMonth, thisWeek, activeAthletes };
+  }, [earnings]);
+
+  if (loading) {
+    return <div className="text-center py-12 text-slate-100">Cargando ganancias...</div>;
+  }
+
+  if (error || !earnings) {
+    return <div className="text-error py-12 text-center">{error || 'No se pudieron cargar las ganancias'}</div>;
+  }
 
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="text-center">
-          <p className="text-slate-100">Total</p>
-          <p className="text-3xl font-bold text-success mt-2">${total}</p>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <StatCard title="Total" value={`$${earnings.totalEarnings.toLocaleString()}`} icon="💰" />
+        <StatCard title="Este Mes" value={`$${stats.thisMonth.toLocaleString()}`} icon="📅" />
+        <StatCard title="Esta Semana" value={`$${stats.thisWeek.toLocaleString()}`} icon="📊" />
+        <StatCard title="Atletas Activos" value={stats.activeAthletes} icon="👥" />
       </div>
 
       <Card title="Transacciones">
-        <div className="space-y-3">
-          {earnings.map((e, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between pb-3 border-b border-dark-700 last:border-0"
-            >
-              <div>
-                <p className="font-semibold text-white">{e.athlete}</p>
-                <p className="text-xs text-slate-200">{e.date}</p>
+        {earnings.transactions.length === 0 ? (
+          <p className="text-slate-100">No hay ganancias registradas todavía</p>
+        ) : (
+          <div className="space-y-3">
+            {earnings.transactions.map((t) => (
+              <div
+                key={t.id}
+                className="flex justify-between pb-3 border-b border-dark-700 last:border-0"
+              >
+                <div>
+                  <p className="font-semibold text-white">{t.athleteName}</p>
+                  <p className="text-xs text-slate-200">
+                    {t.description} • {new Date(t.createdAt).toLocaleDateString('es-ES')}
+                  </p>
+                </div>
+                <p className="font-bold text-success">
+                  +${t.amount.toLocaleString()} {t.currency}
+                </p>
               </div>
-              <p className="font-bold text-success">+${e.amount}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </Card>
     </div>
   );

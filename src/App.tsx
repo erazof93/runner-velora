@@ -13,6 +13,7 @@ import { Activities } from '@/pages/athlete/Activities';
 import { FindCoach } from '@/pages/athlete/FindCoach';
 import { CoachDashboard } from '@/pages/coach/Dashboard';
 import { MyAthletes } from '@/pages/coach/MyAthletes';
+import { AthleteDetail } from '@/pages/coach/AthleteDetail';
 import { TrainingPlans } from '@/pages/coach/TrainingPlans';
 import { Earnings } from '@/pages/coach/Earnings';
 
@@ -71,6 +72,14 @@ export function App() {
             element={
               <ProtectedRoute requiredRole={['COACH']}>
                 <MyAthletes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/coach/athletes/:athleteId"
+            element={
+              <ProtectedRoute requiredRole={['COACH']}>
+                <AthleteDetail />
               </ProtectedRoute>
             }
           />
