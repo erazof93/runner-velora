@@ -19,19 +19,19 @@ export function Input({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor={inputId} className="block text-sm font-semibold text-slate-100 mb-2">
           {label}
         </label>
       )}
       <input
         id={inputId}
-        className={`w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 dark:bg-gray-700 dark:text-white ${
-          error ? 'border-red-500 focus:border-red-500' : ''
+        className={`w-full px-4 py-2.5 text-base rounded-lg border-2 bg-dark-800 border-dark-700 text-white placeholder-slate-200 focus:border-success focus:outline-none disabled:bg-dark-700 disabled:border-dark-700 disabled:text-slate-200 disabled:cursor-not-allowed transition-all duration-200 ${
+          error ? 'border-error focus:border-error' : ''
         } ${className}`}
         {...props}
       />
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-      {helperText && <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{helperText}</p>}
+      {error && <p className="text-error text-sm mt-1.5 font-medium">{error}</p>}
+      {helperText && <p className="text-slate-200 text-sm mt-1.5">{helperText}</p>}
     </div>
   );
 }

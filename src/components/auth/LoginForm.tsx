@@ -46,16 +46,16 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="flex items-center justify-center min-h-screen bg-dark-900">
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">🏃 Runner Velora</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Inicia sesión para continuar</p>
+          <h1 className="text-3xl font-bold text-white">🏃 Runner Velora</h1>
+          <p className="text-slate-100 mt-2">Inicia sesión para continuar</p>
         </div>
 
         {(error || formError) && (
-          <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 rounded-lg">
-            <p className="text-red-700 dark:text-red-200 text-sm">{error || formError}</p>
+          <div className="mb-4 p-3 bg-error/20 border border-error rounded-lg">
+            <p className="text-error text-sm">{error || formError}</p>
           </div>
         )}
 
@@ -87,14 +87,14 @@ export function LoginForm() {
           </Button>
         </form>
 
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+        <div className="mt-6 p-4 bg-blue/10 border border-blue/30 rounded-lg">
+          <p className="text-sm text-slate-100 mb-2">
             <strong>Credenciales de prueba:</strong>
           </p>
-          <p className="text-xs text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-slate-100">
             <strong>Atleta:</strong> cliente@velora.com / Cliente123!
           </p>
-          <p className="text-xs text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-slate-100">
             <strong>Coach:</strong> coach@velora.com / Coach123!
           </p>
         </div>

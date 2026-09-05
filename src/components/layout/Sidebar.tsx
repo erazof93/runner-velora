@@ -6,15 +6,16 @@ export function Sidebar() {
   const location = useLocation();
 
   const athleteNavItems = [
-    { label: 'Dashboard', path: '/athlete' },
-    { label: 'Actividades', path: '/athlete/activities' },
-    { label: 'Buscar Coach', path: '/athlete/find-coach' },
+    { label: '📊 Dashboard', path: '/athlete' },
+    { label: '📋 Actividades', path: '/athlete/activities' },
+    { label: '🏋️ Buscar Coach', path: '/athlete/find-coach' },
   ];
 
   const coachNavItems = [
-    { label: 'Dashboard', path: '/coach' },
-    { label: 'Mis Atletas', path: '/coach/athletes' },
-    { label: 'Planes', path: '/coach/plans' },
+    { label: '📊 Dashboard', path: '/coach' },
+    { label: '👥 Mis Atletas', path: '/coach/athletes' },
+    { label: '📅 Planes', path: '/coach/plans' },
+    { label: '💰 Ganancias', path: '/coach/earnings' },
   ];
 
   const commonItems = [
@@ -31,35 +32,24 @@ export function Sidebar() {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const linkClasses = (active: boolean) =>
+    `block px-4 py-3 rounded-lg transition-all duration-200 text-sm font-medium ${
+      active ? 'bg-success text-black font-semibold' : 'text-slate-100 hover:bg-dark-700 hover:text-white'
+    }`;
+
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow h-screen fixed left-0 top-16">
-      <nav className="p-4 space-y-2">
+    <aside className="w-64 bg-dark-800 border-r border-dark-700 shadow-lg h-screen fixed left-0 top-16 overflow-y-auto">
+      <nav className="p-4 space-y-1">
         {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`block px-4 py-2 rounded-lg transition-colors ${
-              isActive(item.path)
-                ? 'bg-orange-500 text-white'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
-          >
+          <Link key={item.path} to={item.path} className={linkClasses(isActive(item.path))}>
             {item.label}
           </Link>
         ))}
 
-        <hr className="my-4 dark:border-gray-700" />
+        <hr className="my-4 border-dark-700" />
 
         {commonItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`block px-4 py-2 rounded-lg transition-colors ${
-              isActive(item.path)
-                ? 'bg-orange-500 text-white'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
-          >
+          <Link key={item.path} to={item.path} className={linkClasses(isActive(item.path))}>
             {item.label}
           </Link>
         ))}
