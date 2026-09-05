@@ -7,9 +7,19 @@ interface CoachCardProps {
   specialties?: string[];
   rating?: number;
   reviews?: number;
+  athleteCount?: number;
+  planCount?: number;
 }
 
-export function CoachCard({ name, bio, specialties, rating, reviews }: CoachCardProps) {
+export function CoachCard({
+  name,
+  bio,
+  specialties,
+  rating,
+  reviews,
+  athleteCount,
+  planCount,
+}: CoachCardProps) {
   return (
     <Card className="space-y-3">
       <div>
@@ -29,6 +39,12 @@ export function CoachCard({ name, bio, specialties, rating, reviews }: CoachCard
         <p className="text-sm text-slate-100">
           ⭐ {rating.toFixed(1)} ({reviews ?? 0})
         </p>
+      )}
+      {((athleteCount ?? 0) > 0 || (planCount ?? 0) > 0) && (
+        <div className="flex gap-4 text-xs text-slate-100">
+          {(athleteCount ?? 0) > 0 && <span>👥 {athleteCount} atletas</span>}
+          {(planCount ?? 0) > 0 && <span>📅 {planCount} planes</span>}
+        </div>
       )}
       <Button variant="primary" className="w-full">
         Ver Perfil
