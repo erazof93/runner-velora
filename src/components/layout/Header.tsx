@@ -4,7 +4,12 @@ import { useAuthStore } from '@/store/authStore';
 import { useToast } from '@/lib/hooks/useToast';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 
-export function Header() {
+interface HeaderProps {
+  /** Abre el drawer del sidebar en móvil. Ausente => no se muestra el botón. */
+  onMenuClick?: () => void;
+}
+
+export function Header({ onMenuClick }: HeaderProps) {
   const { user, logout } = useAuthStore();
   const toast = useToast();
   const [confirmLogout, setConfirmLogout] = useState(false);
@@ -19,12 +24,37 @@ export function Header() {
     <header className="bg-dark-800/95 backdrop-blur-sm border-b border-dark-700 sticky top-0 z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center gap-3 group">
-            <span className="text-2xl">🏃</span>
-            <span className="text-lg font-bold text-success group-hover:text-success-hover transition-colors">
-              Runner Velora
-            </span>
-          </Link>
+          <div className="flex items-center gap-2">
+            {onMenuClick && (
+              <button
+                type="button"
+                onClick={onMenuClick}
+                aria-label="Abrir menú"
+                className="md:hidden -ml-2 rounded-lg p-2 text-white hover:bg-dark-700 transition-colors"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            )}
+            <Link to="/" className="flex items-center gap-3 group">
+              <span className="text-2xl">🏃</span>
+              <span className="text-lg font-bold text-success group-hover:text-success-hover transition-colors">
+                Runner Velora
+              </span>
+            </Link>
+          </div>
 
           <div className="flex items-center gap-4">
             {user ? (

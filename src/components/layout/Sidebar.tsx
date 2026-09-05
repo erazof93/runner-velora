@@ -1,7 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { user } = useAuthStore();
   const location = useLocation();
 
@@ -38,26 +43,51 @@ export function Sidebar() {
     }`;
 
   return (
-    <aside className="w-[280px] bg-dark-800 border-r border-dark-700 h-screen fixed left-0 top-16 overflow-y-auto px-4 py-6">
-      <div className="text-lg font-bold text-success mb-8">🏃 Runner</div>
+    <>
+      {/* Backdrop: solo en móvil, cuando el drawer está abierto */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={onClose}
+          role="presentation"
+        />
+      )}
 
-      <nav className="space-y-2">
-        {navItems.map((item) => (
-          <Link key={item.path} to={item.path} className={linkClasses(isActive(item.path))}>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
+      <aside
+        className={`w-[280px] bg-dark-800 border-r border-dark-700 h-screen fixed left-0 top-16 z-40 overflow-y-auto px-4 py-6 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="text-lg font-bold text-success mb-8">🏃 Runner</div>
 
-      <hr className="my-4 border-dark-700" />
+        <nav className="space-y-2">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={onClose}
+              className={linkClasses(isActive(item.path))}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
-      <nav className="space-y-2">
-        {commonItems.map((item) => (
-          <Link key={item.path} to={item.path} className={linkClasses(isActive(item.path))}>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-    </aside>
+        <hr className="my-4 border-dark-700" />
+
+        <nav className="space-y-2">
+          {commonItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={onClose}
+              className={linkClasses(isActive(item.path))}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 }
