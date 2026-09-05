@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { MainLayout } from '@/components/layout/MainLayout';
@@ -11,11 +11,13 @@ import { NotFound } from '@/pages/NotFound';
 import { AthleteDashboard } from '@/pages/athlete/Dashboard';
 import { Activities } from '@/pages/athlete/Activities';
 import { FindCoach } from '@/pages/athlete/FindCoach';
+import { CoachDetail } from '@/pages/athlete/CoachDetail';
 import { CoachDashboard } from '@/pages/coach/Dashboard';
 import { MyAthletes } from '@/pages/coach/MyAthletes';
 import { AthleteDetail } from '@/pages/coach/AthleteDetail';
 import { TrainingPlans } from '@/pages/coach/TrainingPlans';
 import { Earnings } from '@/pages/coach/Earnings';
+import { SettingsProfile } from '@/pages/settings/Profile';
 
 export function App() {
   const { restoreSession } = useAuthStore();
@@ -60,6 +62,15 @@ export function App() {
           />
 
           <Route
+            path="/athlete/coach/:id"
+            element={
+              <ProtectedRoute requiredRole={['CLIENTE']}>
+                <CoachDetail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/coach"
             element={
               <ProtectedRoute requiredRole={['COACH']}>
@@ -96,6 +107,16 @@ export function App() {
             element={
               <ProtectedRoute requiredRole={['COACH']}>
                 <Earnings />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/settings" element={<Navigate to="/settings/profile" replace />} />
+          <Route
+            path="/settings/profile"
+            element={
+              <ProtectedRoute>
+                <SettingsProfile />
               </ProtectedRoute>
             }
           />
