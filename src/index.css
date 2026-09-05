@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-900: #0f1419;
-  --color-dark-800: #1a1f2b;
-  --color-dark-700: #2a2f3b;
-  --color-dark-600: #3a3f4b;
+  /* Fondos — más oscuros y neutros (alineado con admin-velora) */
+  --color-dark-900: #0a0d12;
+  --color-dark-800: #141821;
+  --color-dark-700: #222834;
+  --color-dark-600: #2f3644;
 
+  /* Texto — grises más refinados */
   --color-slate-50: #ffffff;
-  --color-slate-100: #a0a9b8;
-  --color-slate-200: #6b7280;
+  --color-slate-100: #b4bcc8;
+  --color-slate-200: #7c8696;
 
-  --color-success: #00d97e;
-  --color-success-hover: #00ff8c;
-  --color-warning: #ffb81c;
-  --color-error: #ff3b30;
-  --color-error-hover: #ff5e52;
-  --color-secondary: #ff6b35;
-  --color-secondary-hover: #ff8555;
-  --color-purple: #a855f7;
-  --color-blue: #00b4ff;
+  /* Acentos */
+  --color-success: #10b981;
+  --color-success-hover: #34d399;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-error-hover: #f87171;
+  --color-secondary: #f97316;
+  --color-secondary-hover: #fb923c;
+  --color-purple: #a78bfa;
+  --color-blue: #38bdf8;
 
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Sombras — pensadas para UI oscura */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 12px 32px -6px rgb(0 0 0 / 0.45);
+  --shadow-xl: 0 24px 48px -12px rgb(0 0 0 / 0.55);
 }
 
 @layer base {
@@ -37,16 +46,25 @@
     margin: 0;
     color: var(--color-slate-50);
     font-family: var(--font-sans);
-    line-height: 1.5;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   a {
     color: var(--color-success);
     text-decoration: none;
+    transition: color 0.15s ease;
   }
 
   a:hover {
     color: var(--color-success-hover);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-success);
+    outline-offset: 2px;
   }
 
   ::selection {
@@ -56,6 +74,7 @@
 
   ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {

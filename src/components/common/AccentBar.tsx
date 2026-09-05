@@ -10,5 +10,5 @@ const colorMap: Record<AccentColor, string> = {
 };
 
 export function AccentBar({ color }: { color: AccentColor }) {
-  return <div className={`w-1 self-stretch rounded-xl ${colorMap[color]}`} />;
+  return <div className={`w-1 self-stretch rounded-full ${colorMap[color]}`} />;
 }

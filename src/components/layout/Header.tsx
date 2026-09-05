@@ -16,7 +16,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-dark-800 border-b border-dark-700 sticky top-0 z-40">
+    <header className="bg-dark-800/95 backdrop-blur-sm border-b border-dark-700 sticky top-0 z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-3 group">

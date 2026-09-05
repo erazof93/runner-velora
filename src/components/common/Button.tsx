@@ -17,7 +17,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer';
+    'font-semibold rounded-lg shadow-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:shadow-md active:shadow-sm disabled:shadow-none';
 
   const variantStyles = {
     primary: 'bg-success hover:bg-success-hover text-black disabled:bg-dark-700 disabled:text-slate-200',

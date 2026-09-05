@@ -29,9 +29,9 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={`bg-dark-800 border border-dark-700 rounded-2xl p-4 transition-all duration-200 ${
+      className={`bg-dark-800 border border-dark-700 rounded-xl p-4 shadow-sm transition-all duration-200 ${
         accentColor ? `border-l-4 ${accentBorderMap[accentColor]}` : ''
-      } ${hover ? 'hover:border-dark-600 hover:shadow-lg' : ''} ${className}`}
+      } ${hover ? 'hover:border-dark-600 hover:shadow-md hover:bg-dark-700/40' : ''} ${className}`}
     >
       {title && (
         <div className="mb-3">
