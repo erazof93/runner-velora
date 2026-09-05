@@ -2,12 +2,14 @@ import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import { useToast } from '@/lib/hooks/useToast';
 import { Input } from '@/components/common/Input';
 import { Button } from '@/components/common/Button';
 import { Card } from '@/components/common/Card';
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const toast = useToast();
   const { login, isLoading, error } = useAuthStore();
   const [formData, setFormData] = useState({
     email: '',
@@ -33,6 +35,7 @@ export function LoginForm() {
       // Leer el estado recién actualizado directamente del store,
       // en vez de la variable `user` capturada en este render.
       const loggedInUser = useAuthStore.getState().user;
+      toast.success(`¡Bienvenido, ${loggedInUser?.name ?? ''}!`.trim());
       if (loggedInUser?.role === 'CLIENTE') {
         navigate('/athlete');
       } else if (loggedInUser?.role === 'COACH') {
@@ -41,7 +44,10 @@ export function LoginForm() {
         navigate('/');
       }
     } catch (err: any) {
-      setFormError(err.response?.data?.message || 'Login falló. Intenta de nuevo.');
+      const message =
+        err.response?.data?.message || 'Login falló. Revisa tu email y contraseña.';
+      setFormError(message);
+      toast.error(message);
     }
   };
 
