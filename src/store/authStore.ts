@@ -10,6 +10,8 @@ interface AuthStore {
   accessToken: string | null;
   refreshToken: string | null;
   isLoading: boolean;
+  /** true hasta que restoreSession() haya corrido una vez (evita el flash a /login en un refresh). */
+  isRestoring: boolean;
   error: string | null;
 
   setUser: (user: User | null) => void;
@@ -29,6 +31,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: null,
   refreshToken: null,
   isLoading: false,
+  isRestoring: true,
   error: null,
 
   setUser: (user) => set({ user }),
@@ -101,19 +104,24 @@ export const useAuthStore = create<AuthStore>((set) => ({
   restoreSession: () => {
     const savedUser = localStorage.getItem('user');
     const savedAccessToken = localStorage.getItem('accessToken');
+    const savedRefreshToken = localStorage.getItem('refreshToken');
 
     if (savedUser && savedAccessToken) {
       try {
-        const user = JSON.parse(savedUser);
+        const user = JSON.parse(savedUser) as User;
         set({
           user,
           accessToken: savedAccessToken,
+          refreshToken: savedRefreshToken,
           isAuthenticated: true,
+          isRestoring: false,
         });
+        return;
       } catch (error) {
         console.error('Error restoring session:', error);
-        set({ isAuthenticated: false });
       }
     }
+
+    set({ isAuthenticated: false, isRestoring: false });
   },
 }));
