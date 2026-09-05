@@ -41,6 +41,22 @@
     color-scheme: dark;
   }
 
+  /* Modo claro — activado con la clase `dark` ausente en <html> (ver useTheme). */
+  :root:not(.dark) {
+    color-scheme: light;
+    --color-dark-900: #f7f7f8;
+    --color-dark-800: #ffffff;
+    --color-dark-700: #f0f0f2;
+    --color-dark-600: #e2e2e6;
+
+    --color-slate-50: #18181b;
+    --color-slate-100: #6b6b74;
+    --color-slate-200: #9a9aa4;
+
+    --color-primary: #8b2fd6;
+    --color-primary-hover: #7a25c0;
+  }
+
   html,
   body {
     background: var(--color-dark-900);

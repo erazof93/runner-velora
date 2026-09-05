@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BarChart3, Clock, MapPin, Star } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { ActivityCard } from '@/components/dashboard/ActivityCard';
@@ -66,21 +67,21 @@ export function AthleteDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-white">¡Hola, {user?.name}! 🏃</h1>
+        <h1 className="text-4xl font-bold text-slate-50">¡Hola, {user?.name}! 🏃</h1>
         <p className="text-slate-100 mt-2">Continúa tu entrenamiento</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard title="Actividades" value={activities.length} icon="📊" />
-        <StatCard title="Distancia" value={totalDistance.toFixed(1)} unit="km" icon="📍" />
-        <StatCard title="Tiempo" value={totalMinutes} unit="min" icon="⏱️" />
-        <StatCard title="Suscripción" value={user?.tier ?? 'FREE'} icon="⭐" />
+        <StatCard title="Actividades" value={activities.length} icon={BarChart3} />
+        <StatCard title="Distancia" value={totalDistance.toFixed(1)} unit="km" icon={MapPin} />
+        <StatCard title="Tiempo" value={totalMinutes} unit="min" icon={Clock} />
+        <StatCard title="Suscripción" value={user?.tier ?? 'FREE'} icon={Star} />
       </div>
 
       <ActivityForm onSubmit={handleCreateActivity} />
 
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">📋 Mis Actividades</h2>
+        <h2 className="text-2xl font-bold text-slate-50 mb-4">📋 Mis Actividades</h2>
         <div className="space-y-3">
           {activities.length > 0 ? (
             activities.map((a) => (
@@ -100,7 +101,7 @@ export function AthleteDashboard() {
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">🏋️ Encuentra tu Coach</h2>
+        <h2 className="text-2xl font-bold text-slate-50 mb-4">🏋️ Encuentra tu Coach</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {coaches.length > 0 ? (
             coaches.map((c) => (

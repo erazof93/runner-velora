@@ -23,7 +23,7 @@ export function CoachCard({
   return (
     <Card className="space-y-3">
       <div>
-        <h3 className="text-lg font-semibold text-white">{name}</h3>
+        <h3 className="text-lg font-semibold text-slate-50">{name}</h3>
         {bio && <p className="text-sm text-slate-100 mt-1">{bio}</p>}
       </div>
       {specialties && specialties.length > 0 && (

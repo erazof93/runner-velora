@@ -30,7 +30,7 @@ export function MyAthletes() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-white">👥 Mis Atletas</h1>
+      <h1 className="text-3xl font-bold text-slate-50">👥 Mis Atletas</h1>
 
       {loading && <ListSkeleton />}
 
@@ -52,7 +52,7 @@ export function MyAthletes() {
             <Link key={a.id} to={`/coach/athletes/${a.athleteId}`}>
               <Card className="flex justify-between items-center hover:border-primary transition-all">
                 <div>
-                  <h3 className="font-semibold text-white">{a.name}</h3>
+                  <h3 className="font-semibold text-slate-50">{a.name}</h3>
                   <p className="text-sm text-slate-100">{a.email}</p>
                   <span
                     className={`text-xs px-2 py-1 rounded mt-2 inline-block ${

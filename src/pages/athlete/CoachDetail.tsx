@@ -67,7 +67,7 @@ export function CoachDetail() {
       <Card className="p-8">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-4xl font-bold text-white">{coach.name}</h1>
+            <h1 className="text-4xl font-bold text-slate-50">{coach.name}</h1>
             <p className="text-slate-100 mt-2">{coach.bio || 'Coach profesional'}</p>
             <div className="flex gap-2 mt-4">
               <span className="bg-success bg-opacity-20 text-success px-3 py-1 rounded-lg text-sm font-semibold">

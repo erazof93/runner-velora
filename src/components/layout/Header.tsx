@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import { useToast } from '@/lib/hooks/useToast';
-import { ConfirmDialog } from '@/components/common/ConfirmDialog';
+import { ThemeToggle } from '@/components/common/ThemeToggle';
+import { UserMenu } from './UserMenu';
 
 interface HeaderProps {
   /** Abre el drawer del sidebar en móvil. Ausente => no se muestra el botón. */
@@ -10,15 +10,7 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
-  const { user, logout } = useAuthStore();
-  const toast = useToast();
-  const [confirmLogout, setConfirmLogout] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    setConfirmLogout(false);
-    toast.success('Sesión cerrada');
-  };
+  const { user } = useAuthStore();
 
   return (
     <header className="bg-dark-800/95 backdrop-blur-sm border-b border-dark-700 sticky top-0 z-40 shadow-sm">
@@ -30,22 +22,9 @@ export function Header({ onMenuClick }: HeaderProps) {
                 type="button"
                 onClick={onMenuClick}
                 aria-label="Abrir menú"
-                className="md:hidden -ml-2 rounded-lg p-2 text-white hover:bg-dark-700 transition-colors"
+                className="md:hidden -ml-2 rounded-lg p-2 text-slate-50 hover:bg-dark-700 transition-colors"
               >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                <Menu className="size-5" />
               </button>
             )}
             <Link to="/" className="flex items-center gap-3 group">
@@ -56,20 +35,10 @@ export function Header({ onMenuClick }: HeaderProps) {
             </Link>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 sm:gap-2">
+            {user && <ThemeToggle />}
             {user ? (
-              <>
-                <div className="text-right hidden sm:block">
-                  <p className="text-white font-medium text-sm">{user.name}</p>
-                  <p className="text-slate-200 text-xs">{user.role}</p>
-                </div>
-                <button
-                  onClick={() => setConfirmLogout(true)}
-                  className="px-4 py-2 bg-error hover:bg-error-hover text-white rounded-lg font-semibold transition-colors duration-200 text-sm"
-                >
-                  Logout
-                </button>
-              </>
+              <UserMenu />
             ) : (
               <Link
                 to="/login"
@@ -81,17 +50,6 @@ export function Header({ onMenuClick }: HeaderProps) {
           </div>
         </div>
       </div>
-
-      <ConfirmDialog
-        isOpen={confirmLogout}
-        title="Cerrar sesión"
-        danger
-        confirmLabel="Cerrar sesión"
-        onConfirm={handleLogout}
-        onCancel={() => setConfirmLogout(false)}
-      >
-        ¿Seguro que quieres cerrar sesión?
-      </ConfirmDialog>
     </header>
   );
 }

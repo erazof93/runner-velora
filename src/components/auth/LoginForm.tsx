@@ -55,7 +55,7 @@ export function LoginForm() {
     <div className="flex items-center justify-center min-h-screen bg-dark-900">
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white">🏃 Runner Velora</h1>
+          <h1 className="text-3xl font-bold text-slate-50">🏃 Runner Velora</h1>
           <p className="text-slate-100 mt-2">Inicia sesión para continuar</p>
         </div>
 

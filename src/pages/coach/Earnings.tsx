@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { BarChart3, Calendar, DollarSign, Users } from 'lucide-react';
 import { Card } from '@/components/common/Card';
 import { EmptyState } from '@/components/common/EmptyState';
 import { ListSkeleton } from '@/components/common/Skeleton';
@@ -50,7 +51,7 @@ export function Earnings() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
+        <h1 className="text-3xl font-bold text-slate-50">💰 Mis Ganancias</h1>
         <ListSkeleton count={4} />
       </div>
     );
@@ -59,7 +60,7 @@ export function Earnings() {
   if (error || !earnings) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
+        <h1 className="text-3xl font-bold text-slate-50">💰 Mis Ganancias</h1>
         <EmptyState
           icon="⚠️"
           title="No se pudieron cargar las ganancias"
@@ -71,13 +72,13 @@ export function Earnings() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
+      <h1 className="text-3xl font-bold text-slate-50">💰 Mis Ganancias</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard title="Total" value={`$${earnings.totalEarnings.toLocaleString()}`} icon="💰" />
-        <StatCard title="Este Mes" value={`$${stats.thisMonth.toLocaleString()}`} icon="📅" />
-        <StatCard title="Esta Semana" value={`$${stats.thisWeek.toLocaleString()}`} icon="📊" />
-        <StatCard title="Atletas Activos" value={stats.activeAthletes} icon="👥" />
+        <StatCard title="Total" value={`$${earnings.totalEarnings.toLocaleString()}`} icon={DollarSign} />
+        <StatCard title="Este Mes" value={`$${stats.thisMonth.toLocaleString()}`} icon={Calendar} />
+        <StatCard title="Esta Semana" value={`$${stats.thisWeek.toLocaleString()}`} icon={BarChart3} />
+        <StatCard title="Atletas Activos" value={stats.activeAthletes} icon={Users} />
       </div>
 
       <Card title="Transacciones">
@@ -95,7 +96,7 @@ export function Earnings() {
                 className="flex justify-between pb-3 border-b border-dark-700 last:border-0"
               >
                 <div>
-                  <p className="font-semibold text-white">{t.athleteName}</p>
+                  <p className="font-semibold text-slate-50">{t.athleteName}</p>
                   <p className="text-xs text-slate-200">
                     {t.description} • {new Date(t.createdAt).toLocaleDateString('es-ES')}
                   </p>

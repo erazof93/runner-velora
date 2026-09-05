@@ -22,7 +22,7 @@ export function Button({
   const variantStyles = {
     primary: 'bg-primary hover:bg-primary-hover text-white disabled:bg-dark-700 disabled:text-slate-200',
     secondary: 'bg-dark-700 hover:bg-dark-600 text-slate-50 disabled:bg-dark-700 disabled:text-slate-200',
-    ghost: 'bg-transparent hover:bg-slate-100/10 text-white border border-slate-100 hover:border-white disabled:text-slate-200 disabled:border-dark-700',
+    ghost: 'bg-transparent hover:bg-slate-100/10 text-slate-50 border border-slate-100 hover:border-slate-50 disabled:text-slate-200 disabled:border-dark-700',
     danger: 'bg-error hover:bg-error-hover text-white disabled:bg-dark-700 disabled:text-slate-200',
   };
 

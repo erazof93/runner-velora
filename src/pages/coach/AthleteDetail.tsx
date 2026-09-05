@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { BarChart3, Clock, MapPin, Users } from 'lucide-react';
 import { Card } from '@/components/common/Card';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { ActivityCard } from '@/components/dashboard/ActivityCard';
@@ -51,20 +52,20 @@ export function AthleteDetail() {
         <Link to="/coach/athletes" className="text-sm text-primary hover:text-primary-hover">
           ← Volver a Mis Atletas
         </Link>
-        <h1 className="text-3xl font-bold text-white mt-2">{profile.name}</h1>
+        <h1 className="text-3xl font-bold text-slate-50 mt-2">{profile.name}</h1>
         <p className="text-slate-100 mt-1">{profile.email}</p>
         {profile.bio && <p className="text-slate-100 mt-2 text-sm">{profile.bio}</p>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard title="Actividades" value={profile.activityCount} icon="📊" />
-        <StatCard title="Distancia" value={profile.totalDistance.toFixed(1)} unit="km" icon="📍" />
-        <StatCard title="Tiempo" value={Math.round(profile.totalDuration / 60)} unit="min" icon="⏱️" />
-        <StatCard title="Seguidores" value={profile.followerCount} icon="👥" />
+        <StatCard title="Actividades" value={profile.activityCount} icon={BarChart3} />
+        <StatCard title="Distancia" value={profile.totalDistance.toFixed(1)} unit="km" icon={MapPin} />
+        <StatCard title="Tiempo" value={Math.round(profile.totalDuration / 60)} unit="min" icon={Clock} />
+        <StatCard title="Seguidores" value={profile.followerCount} icon={Users} />
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold text-white mb-4">📋 Actividades</h2>
+        <h2 className="text-2xl font-bold text-slate-50 mb-4">📋 Actividades</h2>
         {activities.length > 0 ? (
           <div className="space-y-3">
             {activities.map((a) => (

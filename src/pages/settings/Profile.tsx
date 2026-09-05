@@ -47,7 +47,7 @@ export function SettingsProfile() {
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
-        <h1 className="text-4xl font-bold text-white">Mi Perfil</h1>
+        <h1 className="text-4xl font-bold text-slate-50">Mi Perfil</h1>
         <p className="text-slate-100 mt-2">Gestiona tu información personal</p>
       </div>
 
@@ -57,7 +57,7 @@ export function SettingsProfile() {
             👤
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">{user?.name}</h2>
+            <h2 className="text-2xl font-bold text-slate-50">{user?.name}</h2>
             <p className="text-slate-100 mt-1">{user?.email}</p>
             <p className="text-slate-100 text-sm mt-1">
               Rol: <span className="font-semibold">{user?.role}</span>
@@ -102,7 +102,7 @@ export function SettingsProfile() {
       </Card>
 
       <Card className="p-6">
-        <h2 className="text-xl font-bold text-white mb-4">Suscripción</h2>
+        <h2 className="text-xl font-bold text-slate-50 mb-4">Suscripción</h2>
         <p className="text-slate-100">Plan Actual</p>
         <p className="text-2xl font-bold text-success mt-2">{user?.tier}</p>
       </Card>

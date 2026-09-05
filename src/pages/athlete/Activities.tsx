@@ -10,7 +10,7 @@ export function Activities() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-white">📋 Mis Actividades</h1>
+        <h1 className="text-3xl font-bold text-slate-50">📋 Mis Actividades</h1>
         <p className="text-slate-100 mt-2">Total: {activities.length}</p>
       </div>
       <div className="space-y-3">

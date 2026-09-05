@@ -86,7 +86,7 @@ export function TrainingPlans() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-white">📅 Planes</h1>
+        <h1 className="text-3xl font-bold text-slate-50">📅 Planes</h1>
         {!formOpen && !editingPlan && (
           <Button variant="primary" onClick={() => setFormOpen(true)}>
             ➕ Nuevo
@@ -125,7 +125,7 @@ export function TrainingPlans() {
             <Card key={p.id} className="space-y-3">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold text-white">{p.name}</h3>
+                  <h3 className="font-semibold text-slate-50">{p.name}</h3>
                   {p.description && (
                     <p className="mt-1 text-sm text-slate-100">{p.description}</p>
                   )}
@@ -156,7 +156,7 @@ export function TrainingPlans() {
         onConfirm={handleDelete}
         onCancel={() => setDeletingPlan(null)}
       >
-        ¿Seguro que quieres eliminar <strong className="text-white">{deletingPlan?.name}</strong>?
+        ¿Seguro que quieres eliminar <strong className="text-slate-50">{deletingPlan?.name}</strong>?
         Esta acción no se puede deshacer.
       </ConfirmDialog>
     </div>

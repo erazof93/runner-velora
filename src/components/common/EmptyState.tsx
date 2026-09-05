@@ -18,7 +18,7 @@ export function EmptyState({ icon = '📭', title, description, action }: EmptyS
       <div className="mb-3 text-5xl" aria-hidden="true">
         {icon}
       </div>
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
+      <h3 className="text-lg font-semibold text-slate-50">{title}</h3>
       {description && <p className="mt-1 max-w-sm text-sm text-slate-100">{description}</p>}
       {action && (
         <Button variant="primary" className="mt-5" onClick={action.onClick}>

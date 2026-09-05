@@ -53,7 +53,7 @@ export function ConfirmDialog({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="border-b border-dark-700 px-6 py-4">
-          <h2 id="confirm-dialog-title" className="text-lg font-semibold text-white">
+          <h2 id="confirm-dialog-title" className="text-lg font-semibold text-slate-50">
             {title}
           </h2>
         </div>

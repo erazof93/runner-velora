@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           <div className="mb-4 text-5xl" aria-hidden="true">
             ⚠️
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-white">Algo salió mal</h1>
+          <h1 className="mb-2 text-2xl font-bold text-slate-50">Algo salió mal</h1>
           <p className="mb-6 text-slate-100">
             {this.state.error?.message ?? 'Ocurrió un error inesperado.'}
           </p>

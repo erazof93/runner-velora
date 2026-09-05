@@ -35,7 +35,7 @@ export function Card({
     >
       {title && (
         <div className="mb-3">
-          <h2 className="text-base font-semibold text-white">{title}</h2>
+          <h2 className="text-base font-semibold text-slate-50">{title}</h2>
           {subtitle && <p className="text-xs text-slate-100 mt-0.5">{subtitle}</p>}
         </div>
       )}

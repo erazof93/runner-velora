@@ -35,7 +35,7 @@ export function FindCoach() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-white">🏋️ Encuentra tu Coach</h1>
+        <h1 className="text-3xl font-bold text-slate-50">🏋️ Encuentra tu Coach</h1>
         <p className="text-slate-100 mt-2">Conecta con coaches certificados</p>
       </div>
 
