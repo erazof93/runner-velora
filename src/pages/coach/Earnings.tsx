@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card } from '@/components/common/Card';
+import { EmptyState } from '@/components/common/EmptyState';
+import { ListSkeleton } from '@/components/common/Skeleton';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { coachService } from '@/services/coachService';
 import type { CoachEarnings as CoachEarningsData } from '@/lib/api/types';
@@ -46,11 +48,25 @@ export function Earnings() {
   }, [earnings]);
 
   if (loading) {
-    return <div className="text-center py-12 text-slate-100">Cargando ganancias...</div>;
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
+        <ListSkeleton count={4} />
+      </div>
+    );
   }
 
   if (error || !earnings) {
-    return <div className="text-error py-12 text-center">{error || 'No se pudieron cargar las ganancias'}</div>;
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-white">💰 Mis Ganancias</h1>
+        <EmptyState
+          icon="⚠️"
+          title="No se pudieron cargar las ganancias"
+          description={error ?? 'Inténtalo de nuevo más tarde.'}
+        />
+      </div>
+    );
   }
 
   return (
@@ -66,7 +82,11 @@ export function Earnings() {
 
       <Card title="Transacciones">
         {earnings.transactions.length === 0 ? (
-          <p className="text-slate-100">No hay ganancias registradas todavía</p>
+          <EmptyState
+            icon="🧾"
+            title="Aún no hay ganancias"
+            description="Cuando tus atletas contraten una suscripción verás aquí los ingresos."
+          />
         ) : (
           <div className="space-y-3">
             {earnings.transactions.map((t) => (

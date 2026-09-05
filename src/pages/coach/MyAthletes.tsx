@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/common/Card';
+import { EmptyState } from '@/components/common/EmptyState';
+import { ListSkeleton } from '@/components/common/Skeleton';
 import { coachService } from '@/services/coachService';
 import type { CoachAthlete } from '@/lib/api/types';
 
@@ -26,21 +28,25 @@ export function MyAthletes() {
     load();
   }, []);
 
-  if (loading) {
-    return <div className="text-center py-12 text-slate-100">Cargando atletas...</div>;
-  }
-
-  if (error) {
-    return <div className="text-error py-12 text-center">{error}</div>;
-  }
-
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-white">👥 Mis Atletas</h1>
 
-      {athletes.length === 0 ? (
-        <p className="text-slate-100">No tienes atletas asignados todavía</p>
-      ) : (
+      {loading && <ListSkeleton />}
+
+      {!loading && error && (
+        <EmptyState icon="⚠️" title="No se pudieron cargar los atletas" description={error} />
+      )}
+
+      {!loading && !error && athletes.length === 0 && (
+        <EmptyState
+          icon="👥"
+          title="Sin atletas asignados"
+          description="Cuando un atleta te asigne como coach aparecerá aquí."
+        />
+      )}
+
+      {!loading && !error && athletes.length > 0 && (
         <div className="space-y-3">
           {athletes.map((a) => (
             <Link key={a.id} to={`/coach/athletes/${a.athleteId}`}>

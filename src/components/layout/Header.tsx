@@ -1,8 +1,19 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import { useToast } from '@/lib/hooks/useToast';
+import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 
 export function Header() {
   const { user, logout } = useAuthStore();
+  const toast = useToast();
+  const [confirmLogout, setConfirmLogout] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setConfirmLogout(false);
+    toast.success('Sesión cerrada');
+  };
 
   return (
     <header className="bg-dark-800 border-b border-dark-700 sticky top-0 z-40">
@@ -23,8 +34,8 @@ export function Header() {
                   <p className="text-slate-200 text-xs">{user.role}</p>
                 </div>
                 <button
-                  onClick={logout}
-                  className="px-4 py-2 bg-error hover:bg-red-600 text-white rounded-lg font-semibold transition-colors duration-200 text-sm"
+                  onClick={() => setConfirmLogout(true)}
+                  className="px-4 py-2 bg-error hover:bg-error-hover text-white rounded-lg font-semibold transition-colors duration-200 text-sm"
                 >
                   Logout
                 </button>
@@ -40,6 +51,17 @@ export function Header() {
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        isOpen={confirmLogout}
+        title="Cerrar sesión"
+        danger
+        confirmLabel="Cerrar sesión"
+        onConfirm={handleLogout}
+        onCancel={() => setConfirmLogout(false)}
+      >
+        ¿Seguro que quieres cerrar sesión?
+      </ConfirmDialog>
     </header>
   );
 }

@@ -1,37 +1,38 @@
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { usersService } from '@/services/usersService';
+import { useToast } from '@/lib/hooks/useToast';
 import { Card } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
+import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 
 export function SettingsProfile() {
   const { user, setUser, logout } = useAuthStore();
   const navigate = useNavigate();
+  const toast = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name ?? '',
     bio: user?.bio ?? '',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
     try {
       setIsSaving(true);
-      setError(null);
       const updated = await usersService.updateProfile(user.id, formData);
       setUser({ ...user, ...updated });
       setIsEditing(false);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
+      toast.success('Perfil actualizado');
     } catch (err: any) {
-      setError(err.response?.data?.message || err.message || 'Error guardando cambios');
+      toast.error(err.response?.data?.message || err.message || 'Error guardando cambios');
     } finally {
       setIsSaving(false);
     }
@@ -39,6 +40,7 @@ export function SettingsProfile() {
 
   const handleLogout = () => {
     logout();
+    toast.success('Sesión cerrada');
     navigate('/login');
   };
 
@@ -82,8 +84,6 @@ export function SettingsProfile() {
               placeholder="Cuéntanos sobre ti..."
             />
 
-            {error && <p className="text-error text-sm">{error}</p>}
-
             <div className="flex gap-4">
               <Button type="submit" variant="primary" isLoading={isSaving} className="flex-1">
                 Guardar Cambios
@@ -97,10 +97,6 @@ export function SettingsProfile() {
                 Cancelar
               </Button>
             </div>
-
-            {saved && (
-              <p className="text-success text-center font-semibold">✅ Cambios guardados</p>
-            )}
           </form>
         )}
       </Card>
@@ -111,9 +107,20 @@ export function SettingsProfile() {
         <p className="text-2xl font-bold text-success mt-2">{user?.tier}</p>
       </Card>
 
-      <Button variant="ghost" className="w-full" onClick={handleLogout}>
+      <Button variant="ghost" className="w-full" onClick={() => setConfirmLogout(true)}>
         🚪 Cerrar sesión
       </Button>
+
+      <ConfirmDialog
+        isOpen={confirmLogout}
+        title="Cerrar sesión"
+        danger
+        confirmLabel="Cerrar sesión"
+        onConfirm={handleLogout}
+        onCancel={() => setConfirmLogout(false)}
+      >
+        ¿Seguro que quieres cerrar sesión?
+      </ConfirmDialog>
     </div>
   );
 }

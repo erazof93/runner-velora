@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/common/Input';
+import { EmptyState } from '@/components/common/EmptyState';
+import { ListSkeleton } from '@/components/common/Skeleton';
 import { CoachCard } from '@/components/dashboard/CoachCard';
 import { coachService } from '@/services/coachService';
 import type { CoachSummary } from '@/lib/api/types';
@@ -37,27 +39,41 @@ export function FindCoach() {
         <p className="text-slate-100 mt-2">Conecta con coaches certificados</p>
       </div>
 
-      <Input placeholder="Buscar..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Input
+        placeholder="Buscar..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        aria-label="Buscar coach por nombre"
+      />
 
-      {loading && <div className="text-center py-12 text-slate-100">Cargando coaches...</div>}
-      {error && <div className="text-error text-center py-12">{error}</div>}
+      {loading && <ListSkeleton />}
 
-      {!loading && !error && (
+      {!loading && error && (
+        <EmptyState icon="⚠️" title="No se pudieron cargar los coaches" description={error} />
+      )}
+
+      {!loading && !error && filtered.length === 0 && (
+        <EmptyState
+          icon="🔍"
+          title={search ? 'Sin resultados' : 'No hay coaches disponibles'}
+          description={
+            search ? `Ningún coach coincide con "${search}".` : 'Vuelve a intentarlo más tarde.'
+          }
+        />
+      )}
+
+      {!loading && !error && filtered.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filtered.length === 0 ? (
-            <p className="text-slate-100">No hay coaches disponibles</p>
-          ) : (
-            filtered.map((c) => (
-              <Link key={c.id} to={`/athlete/coach/${c.id}`} state={{ coach: c }}>
-                <CoachCard
-                  name={c.name}
-                  bio={c.bio ?? undefined}
-                  athleteCount={c.athleteCount}
-                  planCount={c.planCount}
-                />
-              </Link>
-            ))
-          )}
+          {filtered.map((c) => (
+            <Link key={c.id} to={`/athlete/coach/${c.id}`} state={{ coach: c }}>
+              <CoachCard
+                name={c.name}
+                bio={c.bio ?? undefined}
+                athleteCount={c.athleteCount}
+                planCount={c.planCount}
+              />
+            </Link>
+          ))}
         </div>
       )}
     </div>
