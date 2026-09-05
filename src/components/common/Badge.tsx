@@ -1,22 +1,25 @@
 import type { ReactNode } from 'react';
 
+export type BadgeType = 'easy' | 'tempo' | 'interval' | 'hill' | 'long' | 'race';
+
+const badgeStyles: Record<BadgeType, string> = {
+  easy: 'bg-warning/20 text-warning',
+  tempo: 'bg-secondary/20 text-secondary',
+  interval: 'bg-error/20 text-error',
+  hill: 'bg-purple/20 text-purple',
+  long: 'bg-success/20 text-success',
+  race: 'bg-error/20 text-error',
+};
+
 export interface BadgeProps {
-  status: 'active' | 'pending' | 'inactive';
-  children?: ReactNode;
+  type: BadgeType;
+  children: ReactNode;
 }
 
-const statusMap = {
-  active: { classes: 'bg-success/20 text-success', label: 'Active' },
-  pending: { classes: 'bg-warning/20 text-warning', label: 'Pending' },
-  inactive: { classes: 'bg-error/20 text-error', label: 'Inactive' },
-} as const;
-
-export function Badge({ status, children }: BadgeProps) {
-  const config = statusMap[status];
-
+export function Badge({ type, children }: BadgeProps) {
   return (
-    <span className={`inline-block px-2.5 py-1 rounded-md text-xs font-semibold ${config.classes}`}>
-      {children ?? config.label}
+    <span className={`inline-block px-3 py-1.5 rounded-lg text-xs font-semibold ${badgeStyles[type]}`}>
+      {children}
     </span>
   );
 }

@@ -17,19 +17,19 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer';
+    'font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer';
 
   const variantStyles = {
     primary: 'bg-success hover:bg-success-hover text-black disabled:bg-dark-700 disabled:text-slate-200',
     secondary: 'bg-secondary hover:bg-secondary-hover text-black disabled:bg-dark-700 disabled:text-slate-200',
-    ghost: 'bg-transparent hover:bg-dark-700 text-white border border-slate-100 disabled:text-slate-200 disabled:border-dark-700',
-    danger: 'bg-error hover:bg-red-600 text-white disabled:bg-dark-700 disabled:text-slate-200',
+    ghost: 'bg-transparent hover:bg-slate-100/10 text-white border border-slate-100 hover:border-white disabled:text-slate-200 disabled:border-dark-700',
+    danger: 'bg-error hover:bg-error-hover text-white disabled:bg-dark-700 disabled:text-slate-200',
   };
 
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm h-8',
-    md: 'px-4 py-2 text-sm h-10',
-    lg: 'px-6 py-3 text-base h-12',
+    sm: 'px-3 py-1.5 text-sm h-8 rounded-lg',
+    md: 'px-5 py-3 text-[15px] h-10',
+    lg: 'px-6 py-3.5 text-[15px] h-12',
   };
 
   return (

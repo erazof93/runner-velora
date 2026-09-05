@@ -14,7 +14,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     <div className="min-h-screen bg-dark-900">
       <Header />
       {isAuthenticated && <Sidebar />}
-      <main className={isAuthenticated ? 'pl-64' : ''}>
+      <main className={isAuthenticated ? 'pl-[280px]' : ''}>
         <div className="max-w-7xl mx-auto p-8 min-h-screen">{children}</div>
       </main>
     </div>
