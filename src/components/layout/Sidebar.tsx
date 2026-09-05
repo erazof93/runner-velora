@@ -39,7 +39,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const linkClasses = (active: boolean) =>
     `block px-4 py-3 rounded-[10px] transition-all duration-200 text-sm font-medium ${
-      active ? 'bg-success text-black font-semibold' : 'text-slate-100 hover:bg-dark-700 hover:text-white'
+      active
+        ? 'bg-primary/15 text-primary font-semibold'
+        : 'text-slate-100 hover:bg-dark-700 hover:text-white'
     }`;
 
   return (
@@ -58,7 +60,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="text-lg font-bold text-success mb-8">🏃 Runner</div>
+        <div className="text-lg font-bold text-primary mb-8">🏃 Runner</div>
 
         <nav className="space-y-2">
           {navItems.map((item) => (

@@ -72,7 +72,7 @@ export function ActivityForm({ onSubmit }: ActivityFormProps) {
             name="activityType"
             value={formData.activityType}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 border-2 border-dark-700 rounded-lg bg-dark-800 text-white focus:border-success focus:outline-none"
+            className="w-full px-4 py-2.5 border-2 border-dark-700 rounded-lg bg-dark-800 text-white focus:border-primary focus:outline-none"
           >
             <option value="run">🏃 Run</option>
             <option value="bike">🚴 Bike</option>

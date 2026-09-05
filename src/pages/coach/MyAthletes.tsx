@@ -50,7 +50,7 @@ export function MyAthletes() {
         <div className="space-y-3">
           {athletes.map((a) => (
             <Link key={a.id} to={`/coach/athletes/${a.athleteId}`}>
-              <Card className="flex justify-between items-center hover:border-success transition-all">
+              <Card className="flex justify-between items-center hover:border-primary transition-all">
                 <div>
                   <h3 className="font-semibold text-white">{a.name}</h3>
                   <p className="text-sm text-slate-100">{a.email}</p>

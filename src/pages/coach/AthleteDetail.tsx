@@ -48,7 +48,7 @@ export function AthleteDetail() {
   return (
     <div className="space-y-8">
       <div>
-        <Link to="/coach/athletes" className="text-sm text-success hover:text-success-hover">
+        <Link to="/coach/athletes" className="text-sm text-primary hover:text-primary-hover">
           ← Volver a Mis Atletas
         </Link>
         <h1 className="text-3xl font-bold text-white mt-2">{profile.name}</h1>

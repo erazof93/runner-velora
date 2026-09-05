@@ -25,7 +25,7 @@ export function Input({
       )}
       <input
         id={inputId}
-        className={`w-full px-4 py-2.5 text-base rounded-lg border-2 bg-dark-800 border-dark-700 text-white placeholder-slate-200 shadow-sm focus:border-success focus:bg-dark-700/40 focus:outline-none disabled:bg-dark-700 disabled:border-dark-700 disabled:text-slate-200 disabled:cursor-not-allowed transition-all duration-200 ${
+        className={`w-full px-4 py-2.5 text-base rounded-lg border-2 bg-dark-800 border-dark-700 text-white placeholder-slate-200 shadow-sm focus:border-primary focus:bg-dark-700/40 focus:outline-none disabled:bg-dark-700 disabled:border-dark-700 disabled:text-slate-200 disabled:cursor-not-allowed transition-all duration-200 ${
           error ? 'border-error focus:border-error' : ''
         } ${className}`}
         {...props}

@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Fondos — más oscuros y neutros (alineado con admin-velora) */
-  --color-dark-900: #0a0d12;
-  --color-dark-800: #141821;
-  --color-dark-700: #222834;
-  --color-dark-600: #2f3644;
+  /* Fondos — copiados 1:1 de admin-velora (velora-bg/surface/surface-2/border) */
+  --color-dark-900: #0b0b0f;
+  --color-dark-800: #16171d;
+  --color-dark-700: #1f2028;
+  --color-dark-600: #2e303a;
 
-  /* Texto — grises más refinados */
-  --color-slate-50: #ffffff;
-  --color-slate-100: #b4bcc8;
-  --color-slate-200: #7c8696;
+  /* Texto — copiado de admin-velora (velora-text/muted) */
+  --color-slate-50: #e5e4e7;
+  --color-slate-100: #9ca3af;
+  --color-slate-200: #71717a;
 
-  /* Acentos */
-  --color-success: #10b981;
-  --color-success-hover: #34d399;
+  /* Marca — púrpura real de admin-velora (velora-primary), no verde */
+  --color-primary: #aa3bff;
+  --color-primary-hover: #c084fc;
+
+  /* Semánticos — verde queda solo como "éxito", igual que en admin */
+  --color-success: #22c55e;
+  --color-success-hover: #4ade80;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   --color-error-hover: #f87171;
@@ -53,23 +57,23 @@
   }
 
   a {
-    color: var(--color-success);
+    color: var(--color-primary);
     text-decoration: none;
     transition: color 0.15s ease;
   }
 
   a:hover {
-    color: var(--color-success-hover);
+    color: var(--color-primary-hover);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-success);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
   ::selection {
-    background: var(--color-success);
-    color: #000000;
+    background: var(--color-primary);
+    color: #ffffff;
   }
 
   ::-webkit-scrollbar {
@@ -87,6 +91,6 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-dark-600);
+    background: var(--color-primary);
   }
 }

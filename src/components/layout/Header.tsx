@@ -50,7 +50,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             )}
             <Link to="/" className="flex items-center gap-3 group">
               <span className="text-2xl">🏃</span>
-              <span className="text-lg font-bold text-success group-hover:text-success-hover transition-colors">
+              <span className="text-lg font-bold text-primary group-hover:text-primary-hover transition-colors">
                 Runner Velora
               </span>
             </Link>
@@ -73,7 +73,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             ) : (
               <Link
                 to="/login"
-                className="px-4 py-2 bg-success hover:bg-success-hover text-black rounded-lg font-semibold transition-colors duration-200 text-sm"
+                className="px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-lg font-semibold transition-colors duration-200 text-sm"
               >
                 Login
               </Link>
