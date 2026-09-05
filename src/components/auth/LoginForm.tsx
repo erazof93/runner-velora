@@ -1,0 +1,104 @@
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/store/authStore';
+import { Input } from '@/components/common/Input';
+import { Button } from '@/components/common/Button';
+import { Card } from '@/components/common/Card';
+
+export function LoginForm() {
+  const navigate = useNavigate();
+  const { login, isLoading, error } = useAuthStore();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [formError, setFormError] = useState('');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setFormError('');
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await login(formData.email, formData.password);
+
+      // Leer el estado recién actualizado directamente del store,
+      // en vez de la variable `user` capturada en este render.
+      const loggedInUser = useAuthStore.getState().user;
+      if (loggedInUser?.role === 'CLIENTE') {
+        navigate('/athlete');
+      } else if (loggedInUser?.role === 'COACH') {
+        navigate('/coach');
+      } else {
+        navigate('/');
+      }
+    } catch (err: any) {
+      setFormError(err.response?.data?.message || 'Login falló. Intenta de nuevo.');
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
+      <Card className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">🏃 Runner Velora</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Inicia sesión para continuar</p>
+        </div>
+
+        {(error || formError) && (
+          <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 rounded-lg">
+            <p className="text-red-700 dark:text-red-200 text-sm">{error || formError}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="tu@email.com"
+            required
+            disabled={isLoading}
+          />
+
+          <Input
+            label="Contraseña"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="••••••••"
+            required
+            disabled={isLoading}
+          />
+
+          <Button type="submit" variant="primary" className="w-full" isLoading={isLoading}>
+            Iniciar Sesión
+          </Button>
+        </form>
+
+        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <strong>Credenciales de prueba:</strong>
+          </p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">
+            <strong>Atleta:</strong> cliente@velora.com / Cliente123!
+          </p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">
+            <strong>Coach:</strong> coach@velora.com / Coach123!
+          </p>
+        </div>
+      </Card>
+    </div>
+  );
+}

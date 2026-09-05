@@ -1,16 +1,22 @@
 import { create } from 'zustand';
-import type { User } from '@/types/user';
+import type { User, AuthResponse } from '@/types/user';
+import api from '@/lib/api/client';
+import { endpoints } from '@/lib/api/endpoints';
+import { loginSchema } from '@/lib/validators/auth';
 
 interface AuthStore {
   user: User | null;
   isAuthenticated: boolean;
   accessToken: string | null;
   refreshToken: string | null;
+  isLoading: boolean;
+  error: string | null;
 
   setUser: (user: User | null) => void;
   setAccessToken: (token: string | null) => void;
   setRefreshToken: (token: string | null) => void;
   setIsAuthenticated: (authenticated: boolean) => void;
+  setError: (error: string | null) => void;
 
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -22,15 +28,60 @@ export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: false,
   accessToken: null,
   refreshToken: null,
+  isLoading: false,
+  error: null,
 
   setUser: (user) => set({ user }),
   setAccessToken: (token) => set({ accessToken: token }),
   setRefreshToken: (token) => set({ refreshToken: token }),
   setIsAuthenticated: (authenticated) => set({ isAuthenticated: authenticated }),
+  setError: (error) => set({ error }),
 
   login: async (email: string, password: string) => {
-    // TODO: Implementar login después
-    console.log('Login:', email, password);
+    set({ isLoading: true, error: null });
+
+    try {
+      // Validar inputs
+      const validated = loginSchema.parse({ email, password });
+
+      // API request
+      const response = await api.post<AuthResponse>(endpoints.auth.login, validated);
+      const { accessToken, refreshToken, ...userData } = response.data;
+
+      // Guardar en state
+      const user: User = {
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+        role: userData.role,
+        tier: userData.tier,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      set({
+        user,
+        accessToken,
+        refreshToken,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+
+      // Guardar en localStorage
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || error.message || 'Login falló';
+
+      set({
+        isLoading: false,
+        error: errorMessage,
+      });
+
+      throw error;
+    }
   },
 
   logout: () => {
@@ -39,7 +90,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
+      error: null,
     });
+
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -59,6 +112,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         });
       } catch (error) {
         console.error('Error restoring session:', error);
+        set({ isAuthenticated: false });
       }
     }
   },
