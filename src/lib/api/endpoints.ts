@@ -26,6 +26,8 @@ export const endpoints = {
     athleteFeedback: (athleteId: string) => `/coach/athletes/${athleteId}/feedback`,
     plans: '/coach/plans',
     planById: (id: string) => `/coach/plans/${id}`,
+    applications: '/coach/applications',
+    myApplication: '/coach/applications/me',
   },
   subscriptions: {
     getMe: '/subscriptions/me',

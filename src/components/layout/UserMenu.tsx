@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, LogOut, UserRound } from 'lucide-react';
+import { ChevronDown, Dumbbell, LogOut, UserRound } from 'lucide-react';
 import { Dropdown } from '@/components/common/Dropdown';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
+import { BecomeCoachModal } from '@/components/common/BecomeCoachModal';
 import { useAuthStore } from '@/store/authStore';
 import { useToast } from '@/lib/hooks/useToast';
 import type { UserRole } from '@/types/user';
@@ -19,6 +20,7 @@ export function UserMenu() {
   const navigate = useNavigate();
   const toast = useToast();
   const [confirmLogout, setConfirmLogout] = useState(false);
+  const [becomeCoachOpen, setBecomeCoachOpen] = useState(false);
 
   if (!user) return null;
 
@@ -30,6 +32,7 @@ export function UserMenu() {
   };
 
   const roleLabel = ROLE_LABELS[user.role] ?? user.role;
+  const canApplyAsCoach = user.role === 'CLIENTE';
 
   return (
     <>
@@ -39,6 +42,16 @@ export function UserMenu() {
           { label: user.email, disabled: true },
           { label: `Rol: ${roleLabel}`, disabled: true },
           { divider: true, label: 'sep' },
+          ...(canApplyAsCoach
+            ? [
+                {
+                  label: 'Quiero ser Coach',
+                  icon: <Dumbbell className="size-4" />,
+                  onClick: () => setBecomeCoachOpen(true),
+                },
+                { divider: true, label: 'sep2' },
+              ]
+            : []),
           {
             label: 'Cerrar sesión',
             icon: <LogOut className="size-4" />,
@@ -58,6 +71,12 @@ export function UserMenu() {
             <ChevronDown className="size-4 text-slate-100" />
           </span>
         }
+      />
+
+      <BecomeCoachModal
+        key={becomeCoachOpen ? 'open' : 'closed'}
+        isOpen={becomeCoachOpen}
+        onClose={() => setBecomeCoachOpen(false)}
       />
 
       <ConfirmDialog

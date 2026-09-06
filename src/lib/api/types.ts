@@ -88,3 +88,13 @@ export interface CoachEarnings {
   totalEarnings: number;
   transactions: CoachEarningTransaction[];
 }
+
+export type CoachApplicationStatus = 'pending' | 'approved' | 'rejected';
+
+export interface CoachApplication {
+  id: string;
+  status: CoachApplicationStatus;
+  reviewNote: string | null;
+  createdAt: string;
+  reviewedAt: string | null;
+}

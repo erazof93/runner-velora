@@ -2,6 +2,7 @@ import api from '@/lib/api/client';
 import { endpoints } from '@/lib/api/endpoints';
 import type {
   AthleteProfile,
+  CoachApplication,
   CoachAthlete,
   CoachEarnings,
   CoachSummary,
@@ -17,6 +18,25 @@ export const coachService = {
 
   async becomeCoach(bio?: string): Promise<void> {
     await api.post(endpoints.coach.becomeCoach, { bio });
+  },
+
+  async submitApplication(dto: {
+    phone: string;
+    experience: string;
+    bio?: string;
+  }): Promise<CoachApplication> {
+    const { data } = await api.post<CoachApplication>(
+      endpoints.coach.applications,
+      dto,
+    );
+    return data;
+  },
+
+  async getMyApplication(): Promise<CoachApplication | null> {
+    const { data } = await api.get<CoachApplication | null>(
+      endpoints.coach.myApplication,
+    );
+    return data;
   },
 
   async getMyAthletes(): Promise<CoachAthlete[]> {
