@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from './Button';
 import { Input } from './Input';
 import { useToast } from '@/lib/hooks/useToast';
@@ -53,6 +54,10 @@ export function BecomeCoachModal({ isOpen, onClose }: BecomeCoachModalProps) {
 
   if (!isOpen) return null;
 
+  // Portal a <body>: el <header> tiene `backdrop-blur` (= containing block para
+  // `position: fixed`), así que sin portal el modal quedaría atrapado dentro
+  // de la barra superior.
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -75,7 +80,7 @@ export function BecomeCoachModal({ isOpen, onClose }: BecomeCoachModalProps) {
   const canSubmit =
     form.phone.trim().length >= 6 && form.experience.trim().length >= 10;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 overflow-y-auto bg-black/60"
       onClick={onClose}
@@ -180,6 +185,7 @@ export function BecomeCoachModal({ isOpen, onClose }: BecomeCoachModalProps) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
