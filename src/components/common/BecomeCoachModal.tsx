@@ -77,17 +77,18 @@ export function BecomeCoachModal({ isOpen, onClose }: BecomeCoachModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60"
       onClick={onClose}
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="become-coach-title"
-        className="w-full max-w-lg rounded-xl border border-dark-700 bg-dark-800 shadow-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="border-b border-dark-700 px-6 py-4">
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="become-coach-title"
+          className="my-8 w-full max-w-lg rounded-xl border border-dark-700 bg-dark-800 shadow-xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="border-b border-dark-700 px-6 py-4">
           <h2 id="become-coach-title" className="text-lg font-semibold text-slate-50">
             🏋️ Quiero ser Coach
           </h2>
@@ -176,6 +177,7 @@ export function BecomeCoachModal({ isOpen, onClose }: BecomeCoachModalProps) {
               </Button>
             </div>
           )}
+          </div>
         </div>
       </div>
     </div>
